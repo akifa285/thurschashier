@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KantinKu — Toko & Kantin Pesantren Al-Hikmah</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hijau: #1B6B3A;
+    --hijau-muda: #2E9B56;
+    --hijau-pucat: #D6EFE0;
+    --emas: #C8922A;
+    --emas-muda: #F0C060;
+    --krem: #FDF8EE;
+    --gelap: #16231C;
+    --abu: #5A6B60;
+    --putih: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--krem);
+    color: var(--gelap);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(253,248,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(27,107,58,0.12);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--hijau);
+  }
+  .nav-logo .dot { color: var(--emas); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--abu);
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--hijau); }
+  .nav-cta {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .btn-outline {
+    padding: 9px 22px; border-radius: 100px;
+    border: 1.5px solid var(--hijau); color: var(--hijau);
+    background: transparent; font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--hijau); color: white; }
+  .btn-solid {
+    padding: 9px 22px; border-radius: 100px;
+    background: var(--emas); color: white;
+    border: none; font-size: 13px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-solid:hover { background: var(--hijau); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 60px 60px;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,146,42,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--hijau-pucat); color: var(--hijau);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 12px; font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .hero-tag::before { content: '★'; color: var(--emas); }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px; line-height: 1.1;
+    font-weight: 900;
+    color: var(--gelap);
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--hijau); }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--emas), var(--emas-muda));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-desc {
+    font-size: 16px; color: var(--abu); line-height: 1.7;
+    max-width: 440px; margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn-hero {
+    padding: 14px 32px; border-radius: 100px;
+    background: var(--hijau); color: white;
+    font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-hero:hover { background: var(--gelap); transform: translateY(-2px); }
+  .btn-ghost {
+    padding: 14px 28px; border-radius: 100px;
+    border: 1.5px solid rgba(27,107,58,0.3);
+    color: var(--hijau); background: transparent;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--hijau); background: var(--hijau-pucat); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 40px;
+    padding-top: 28px; border-top: 1px solid rgba(27,107,58,0.12);
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 900; color: var(--hijau);
+  }
+  .stat-label { font-size: 12px; color: var(--abu); margin-top: 2px; }
+
+  /* HERO RIGHT — Visual Card */
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 16px;
+    position: relative;
+  }
+  .hero-card {
+    background: white;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 4px 24px rgba(27,107,58,0.1);
+  }
+  .hero-card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--hijau-pucat);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .card-info .name { font-weight: 600; font-size: 14px; }
+  .card-info .sub { font-size: 12px; color: var(--abu); }
+  .member-badge {
+    margin-left: auto;
+    background: var(--emas); color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .order-items { display: flex; flex-direction: column; gap: 10px; }
+  .order-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    background: var(--krem); border-radius: 12px;
+  }
+  .item-name { font-size: 13px; font-weight: 500; }
+  .item-qty { font-size: 12px; color: var(--abu); }
+  .item-price { font-weight: 600; font-size: 13px; color: var(--hijau); }
+  .discount-tag {
+    font-size: 11px; background: var(--hijau-pucat);
+    color: var(--hijau); padding: 2px 8px; border-radius: 100px;
+    font-weight: 600;
+  }
+  .total-row {
+    display: flex; justify-content: space-between;
+    padding: 12px 0 0; margin-top: 10px;
+    border-top: 1px dashed rgba(27,107,58,0.2);
+  }
+  .total-label { font-size: 13px; color: var(--abu); }
+  .total-amount { font-weight: 700; font-size: 16px; color: var(--hijau); }
+
+  /* Tracking mini card */
+  .tracking-card {
+    background: var(--hijau);
+    border-radius: 16px; padding: 16px 20px;
+    color: white;
+  }
+  .tracking-title { font-size: 12px; opacity: 0.75; margin-bottom: 10px; }
+  .tracking-steps {
+    display: flex; align-items: center; gap: 0;
+  }
+  .t-step {
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1; font-size: 10px; text-align: center;
+  }
+  .t-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; margin-bottom: 4px;
+  }
+  .t-dot.done { background: var(--emas-muda); color: var(--gelap); }
+  .t-dot.active { background: white; color: var(--hijau); font-weight: 700; }
+  .t-line { flex: 1; height: 1px; background: rgba(255,255,255,0.2); }
+  .t-line.done { background: var(--emas-muda); }
+
+  /* SECTION UMUM */
+  section { padding: 80px 60px; }
+  .section-tag {
+    display: inline-block;
+    background: var(--hijau-pucat); color: var(--hijau);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600;
+    margin-bottom: 14px; letter-spacing: 0.4px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 900; margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .section-sub { color: var(--abu); font-size: 15px; max-width: 500px; line-height: 1.6; }
+
+  /* PRODUK */
+  .produk { background: white; }
+  .produk-header { text-align: center; margin-bottom: 48px; }
+  .produk-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .produk-card {
+    background: var(--krem);
+    border-radius: 16px; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .produk-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(27,107,58,0.15);
+  }
+  .produk-img {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+    background: var(--hijau-pucat);
+  }
+  .produk-body { padding: 16px; }
+  .produk-nama { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .produk-kategori { font-size: 11px; color: var(--abu); margin-bottom: 10px; }
+  .produk-harga {
+    font-weight: 700; font-size: 15px; color: var(--hijau);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .add-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--hijau); color: white;
+    border: none; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+    transition: background 0.2s;
+  }
+  .add-btn:hover { background: var(--emas); }
+
+  /* FITUR */
+  .fitur { background: var(--krem); }
+  .fitur-header { margin-bottom: 48px; }
+  .fitur-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fitur-card {
+    background: white; border-radius: 18px; padding: 28px;
+    border: 1px solid rgba(27,107,58,0.08);
+    transition: box-shadow 0.2s;
+  }
+  .fitur-card:hover { box-shadow: 0 8px 28px rgba(27,107,58,0.1); }
+  .fitur-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--hijau-pucat);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 16px;
+  }
+  .fitur-judul { font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  .fitur-desc { font-size: 13px; color: var(--abu); line-height: 1.6; }
+
+  /* MEMBERSHIP */
+  .membership {
+    background: var(--gelap);
+    color: white;
+  }
+  .membership .section-title { color: white; }
+  .membership .section-sub { color: rgba(255,255,255,0.55); }
+  .membership-header { margin-bottom: 48px; }
+  .ustadz-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .ustadz-card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.2s;
+  }
+  .ustadz-card:hover { background: rgba(200,146,42,0.15); border-color: rgba(200,146,42,0.3); }
+  .ustadz-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--emas), var(--emas-muda));
+    margin: 0 auto 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .ustadz-nama { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .ustadz-jabatan { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+  .ustadz-badge {
+    display: inline-block;
+    background: var(--emas); color: white;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .diskon-banner {
+    margin-top: 36px;
+    background: linear-gradient(135deg, var(--hijau), #0D4225);
+    border-radius: 18px; padding: 28px 36px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .diskon-info {}
+  .diskon-besar {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 900;
+    color: var(--emas-muda);
+  }
+  .diskon-keterangan { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+  .diskon-action {}
+
+  /* CTA */
+  .cta-section {
+    background: var(--hijau);
+    text-align: center; padding: 80px 60px;
+  }
+  .cta-section .section-title { color: white; }
+  .cta-section p { color: rgba(255,255,255,0.7); font-size: 16px; margin: 12px 0 32px; }
+  .btn-emas {
+    padding: 16px 40px; border-radius: 100px;
+    background: var(--emas); color: white;
+    font-size: 16px; font-weight: 700;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-emas:hover { background: var(--emas-muda); color: var(--gelap); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--gelap); color: rgba(255,255,255,0.45);
+    padding: 40px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 900; color: white;
+  }
+  .footer-logo .dot { color: var(--emas); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--emas); }
+
+  /* NOTIFICATION DOT */
+  .notification {
+    position: fixed; bottom: 28px; right: 28px;
+    background: var(--hijau); color: white;
+    padding: 14px 20px; border-radius: 14px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(27,107,58,0.35);
+    display: flex; align-items: center; gap: 10px;
+    animation: slideUp 0.5s ease 2s both;
+    z-index: 200;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .notif-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--emas-muda);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.4); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Kantin<span class="dot">Ku</span></div>
+  <ul class="nav-links">
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#fitur">Fitur</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#transaksi">Transaksi</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline">Masuk</a>
+    <a href="login.html#register" class="btn-solid">Daftar</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Pesantren Al-Hikmah — Kantin Resmi</div>
+    <h1>Belanja <span>Mudah</span>,<br>Berkah <em>Selalu</em></h1>
+    <p class="hero-desc">
+      Pesan makanan, minuman, dan kebutuhan santri langsung dari genggamanmu. 
+      Tersedia sistem antar, booking antrean, dan diskon khusus ustadz.
+    </p>
+    <div class="hero-actions">
+      <a href="#produk" class="btn-hero">🛒 Lihat Produk</a>
+      <a href="login.html" class="btn-ghost">Masuk Akun →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Produk Tersedia</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Santri Aktif</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20%</div>
+        <div class="stat-label">Diskon Member</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- Order Card -->
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="avatar">👳</div>
+        <div class="card-info">
+          <div class="name">Ust. Ahmad Fauzi</div>
+          <div class="sub">Member Platinum · #TRX-2024</div>
+        </div>
+        <span class="member-badge">MEMBER</span>
+      </div>
+      <div class="order-items">
+        <div class="order-item">
+          <div>
+            <div class="item-name">Nasi Goreng Spesial</div>
+            <div class="item-qty">1x porsi</div>
+          </div>
+          <div style="text-align:right">
+            <div class="item-price">Rp 12.000</div>
+            <span class="discount-tag">-20%</span>
+          </div>
+        </div>
+        <div class="order-item">
+          <div>
+            <div class="item-name">Es Teh Manis</div>
+            <div class="item-qty">2x gelas</div>
+          </div>
+          <div style="text-align:right">
+            <div class="item-price">Rp 8.000</div>
+            <span class="discount-tag">-20%</span>
+          </div>
+        </div>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Total Hemat:</span>
+        <span class="total-amount">Rp 16.000 ✓</span>
+      </div>
+    </div>
+
+    <!-- Tracking Card -->
+    <div class="tracking-card">
+      <div class="tracking-title">📦 Status Pengiriman — Order #TRX-2024</div>
+      <div class="tracking-steps">
+        <div class="t-step">
+          <div class="t-dot done">✓</div>
+          <div>Dipesan</div>
+        </div>
+        <div class="t-line done"></div>
+        <div class="t-step">
+          <div class="t-dot done">✓</div>
+          <div>Diproses</div>
+        </div>
+        <div class="t-line done"></div>
+        <div class="t-step">
+          <div class="t-dot active">🛵</div>
+          <div>Di Jalan</div>
+        </div>
+        <div class="t-line"></div>
+        <div class="t-step">
+          <div class="t-dot">🏠</div>
+          <div>Tiba</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK -->
+<section class="produk" id="produk">
+  <div class="produk-header">
+    <div class="section-tag">📋 Menu Hari Ini</div>
+    <div class="section-title">Produk Unggulan</div>
+    <p class="section-sub">Pilihan makanan, minuman, dan kebutuhan santri setiap hari. Segar dan halal.</p>
+  </div>
+  <div class="produk-grid">
+    <div class="produk-card">
+      <div class="produk-img">🍛</div>
+      <div class="produk-body">
+        <div class="produk-nama">Nasi Goreng Spesial</div>
+        <div class="produk-kategori">Makanan Berat</div>
+        <div class="produk-harga">
+          <span>Rp 15.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🍜</div>
+      <div class="produk-body">
+        <div class="produk-nama">Mie Ayam Bakso</div>
+        <div class="produk-kategori">Makanan Berat</div>
+        <div class="produk-harga">
+          <span>Rp 12.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🧋</div>
+      <div class="produk-body">
+        <div class="produk-nama">Es Teh Tarik</div>
+        <div class="produk-kategori">Minuman</div>
+        <div class="produk-harga">
+          <span>Rp 7.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🍱</div>
+      <div class="produk-body">
+        <div class="produk-nama">Paket Sahur</div>
+        <div class="produk-kategori">Paket Hemat</div>
+        <div class="produk-harga">
+          <span>Rp 20.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🥤</div>
+      <div class="produk-body">
+        <div class="produk-nama">Jus Alpukat</div>
+        <div class="produk-kategori">Minuman</div>
+        <div class="produk-harga">
+          <span>Rp 10.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🍪</div>
+      <div class="produk-body">
+        <div class="produk-nama">Snack Campur</div>
+        <div class="produk-kategori">Jajanan</div>
+        <div class="produk-harga">
+          <span>Rp 5.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">📚</div>
+      <div class="produk-body">
+        <div class="produk-nama">Buku Tulis A4</div>
+        <div class="produk-kategori">ATK</div>
+        <div class="produk-harga">
+          <span>Rp 8.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="produk-card">
+      <div class="produk-img">🧴</div>
+      <div class="produk-body">
+        <div class="produk-nama">Sabun Mandi</div>
+        <div class="produk-kategori">Kebutuhan</div>
+        <div class="produk-harga">
+          <span>Rp 6.000</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FITUR -->
+<section class="fitur" id="fitur">
+  <div class="fitur-header">
+    <div class="section-tag">⚡ Keunggulan</div>
+    <div class="section-title">Kenapa KantinKu?</div>
+    <p class="section-sub">Platform lengkap untuk seluruh kebutuhan transaksi di lingkungan pesantren.</p>
+  </div>
+  <div class="fitur-grid">
+    <div class="fitur-card">
+      <div class="fitur-icon">🛵</div>
+      <div class="fitur-judul">Pesan Antar (Delivery)</div>
+      <div class="fitur-desc">Pesan dari kamar, makanan diantar langsung ke asrama. Tracking status pengiriman real-time.</div>
+    </div>
+    <div class="fitur-card">
+      <div class="fitur-icon">📋</div>
+      <div class="fitur-judul">Book Antrian Online</div>
+      <div class="fitur-desc">Tidak perlu mengantri panjang. Booking slot antrian dari aplikasi. Biaya layanan Rp 2.000.</div>
+    </div>
+    <div class="fitur-card">
+      <div class="fitur-icon">⭐</div>
+      <div class="fitur-judul">Sistem Membership</div>
+      <div class="fitur-desc">Ustadz dan anggota terpilih mendapat diskon 20% otomatis untuk setiap transaksi.</div>
+    </div>
+    <div class="fitur-card">
+      <div class="fitur-icon">📊</div>
+      <div class="fitur-judul">Dashboard Admin (CMS)</div>
+      <div class="fitur-desc">Admin dapat mengelola produk, harga, stok, dan memantau semua transaksi secara real-time.</div>
+    </div>
+    <div class="fitur-card">
+      <div class="fitur-icon">📦</div>
+      <div class="fitur-judul">Tracking Pengiriman</div>
+      <div class="fitur-desc">Pantau status pesananmu dari diproses, dikirim, hingga tiba. Transparan dan akurat.</div>
+    </div>
+    <div class="fitur-card">
+      <div class="fitur-icon">💳</div>
+      <div class="fitur-judul">Transaksi Aman</div>
+      <div class="fitur-desc">Bayar langsung di tempat atau melalui sistem online yang terintegrasi dan aman.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="membership" id="membership">
+  <div class="membership-header">
+    <div class="section-tag" style="background:rgba(200,146,42,0.2);color:var(--emas-muda);">👳 Member Khusus</div>
+    <div class="section-title">Ustadz Member</div>
+    <p class="section-sub">5 ustadz terpilih telah mendapatkan membership eksklusif dengan diskon 20% setiap transaksi.</p>
+  </div>
+  <div class="ustadz-grid">
+    <div class="ustadz-card">
+      <div class="ustadz-avatar">👳</div>
+      <div class="ustadz-nama">Ust. Ahmad Fauzi</div>
+      <div class="ustadz-jabatan">Wali Kelas XII</div>
+      <span class="ustadz-badge">PLATINUM</span>
+    </div>
+    <div class="ustadz-card">
+      <div class="ustadz-avatar">🧑‍🏫</div>
+      <div class="ustadz-nama">Ust. Ridwan Hasim</div>
+      <div class="ustadz-jabatan">Pengajar Fiqih</div>
+      <span class="ustadz-badge">PLATINUM</span>
+    </div>
+    <div class="ustadz-card">
+      <div class="ustadz-avatar">📖</div>
+      <div class="ustadz-nama">Ust. Lukman Hakim</div>
+      <div class="ustadz-jabatan">Kepala Asrama</div>
+      <span class="ustadz-badge">PLATINUM</span>
+    </div>
+    <div class="ustadz-card">
+      <div class="ustadz-avatar">🕌</div>
+      <div class="ustadz-nama">Ust. Zainal Abidin</div>
+      <div class="ustadz-jabatan">Imam Masjid</div>
+      <span class="ustadz-badge">PLATINUM</span>
+    </div>
+    <div class="ustadz-card">
+      <div class="ustadz-avatar">✏️</div>
+      <div class="ustadz-nama">Ust. Hafidz Rahman</div>
+      <div class="ustadz-jabatan">Pengajar Tahfidz</div>
+      <span class="ustadz-badge">PLATINUM</span>
+    </div>
+  </div>
+  <div class="diskon-banner">
+    <div class="diskon-info">
+      <div class="diskon-besar">20% OFF</div>
+      <div class="diskon-keterangan">Diskon otomatis untuk setiap transaksi member. Berlaku seumur hidup keanggotaan.</div>
+    </div>
+    <a href="login.html" class="btn-emas">Daftar Member →</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-tag" style="background:rgba(255,255,255,0.15);color:white;">🚀 Mulai Sekarang</div>
+  <div class="section-title">Siap Belanja Lebih Mudah?</div>
+  <p>Bergabung dengan ratusan santri yang sudah menikmati kemudahan KantinKu setiap hari.</p>
+  <a href="login.html" class="btn-emas">Buat Akun Gratis</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Kantin<span class="dot">Ku</span> — Al-Hikmah</div>
+  <div style="font-size:13px;">© 2024 KantinKu. Pesantren Al-Hikmah. Semua hak dilindungi.</div>
+  <div class="footer-links">
+    <a href="#">Kebijakan Privasi</a>
+    <a href="#">Syarat & Ketentuan</a>
+    <a href="#">Bantuan</a>
+  </div>
+</footer>
+
+<!-- NOTIFIKASI FLOATING -->
+<div class="notification">
+  <div class="notif-dot"></div>
+  <span>Ust. Ridwan baru saja memesan 🍛</span>
+</div>
+
+<script>
+  // Animasi counter stats
+  const stats = document.querySelectorAll('.stat-num');
+  const targets = [200, 500, 20];
+  const suffixes = ['+', '+', '%'];
+  stats.forEach((el, i) => {
+    let count = 0;
+    const step = Math.ceil(targets[i] / 40);
+    const timer = setInterval(() => {
+      count = Math.min(count + step, targets[i]);
+      el.textContent = count + suffixes[i];
+      if (count >= targets[i]) clearInterval(timer);
+    }, 30);
+  });
+
+  // Tombol tambah produk
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const nama = this.closest('.produk-card').querySelector('.produk-nama').textContent;
+      this.textContent = '✓';
+      this.style.background = 'var(--emas)';
+      setTimeout(() => {
+        this.textContent = '+';
+        this.style.background = 'var(--hijau)';
+      }, 1200);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk / Daftar — KantinKu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hijau: #1B6B3A;
+    --hijau-muda: #2E9B56;
+    --hijau-pucat: #D6EFE0;
+    --emas: #C8922A;
+    --emas-muda: #F0C060;
+    --krem: #FDF8EE;
+    --gelap: #16231C;
+    --abu: #5A6B60;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--krem);
+    overflow: hidden;
+  }
+  .panel-left {
+    background: var(--gelap);
+    padding: 60px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .panel-left::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width:320px; height:320px;
+    background:rgba(200,146,42,0.12); border-radius:50%;
+  }
+  .panel-left::after {
+    content:''; position:absolute; bottom:-100px; left:-60px;
+    width:280px; height:280px;
+    background:rgba(27,107,58,0.2); border-radius:50%;
+  }
+  .logo { font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:white; z-index:1; }
+  .logo .dot { color:var(--emas); }
+  .left-content { z-index:1; }
+  .left-title { font-family:'Playfair Display',serif; font-size:40px; font-weight:900; color:white; line-height:1.2; margin-bottom:16px; }
+  .left-title em { font-style:normal; color:var(--emas-muda); }
+  .left-desc { color:rgba(255,255,255,0.55); font-size:14px; line-height:1.7; margin-bottom:32px; }
+  .feature-list { display:flex; flex-direction:column; gap:12px; }
+  .feature-item { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.05); padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.07); }
+  .feature-icon { width:32px; height:32px; border-radius:8px; background:rgba(200,146,42,0.2); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .feature-text { font-size:13px; color:rgba(255,255,255,0.75); }
+  .role-hint { z-index:1; display:flex; gap:12px; }
+  .role-pill { padding:8px 18px; border-radius:100px; font-size:12px; font-weight:600; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.2s; }
+  .role-pill.active { background:var(--hijau); color:white; border-color:var(--hijau); }
+  .role-pill:hover { border-color:var(--emas); color:var(--emas-muda); }
+
+  .panel-right { display:flex; align-items:center; justify-content:center; padding:40px; background:var(--krem); overflow-y:auto; }
+  .auth-box { width:100%; max-width:400px; }
+
+  .tab-group { display:flex; background:white; border-radius:12px; padding:4px; margin-bottom:28px; border:1px solid rgba(27,107,58,0.12); }
+  .tab-btn { flex:1; padding:10px; border:none; background:transparent; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; color:var(--abu); cursor:pointer; transition:all 0.2s; }
+  .tab-btn.active { background:var(--hijau); color:white; }
+
+  .role-tabs { display:flex; gap:8px; margin-bottom:24px; }
+  .role-tab { flex:1; padding:10px 12px; border-radius:10px; border:1.5px solid rgba(27,107,58,0.15); background:white; cursor:pointer; text-align:center; transition:all 0.2s; }
+  .role-tab.active { border-color:var(--hijau); background:var(--hijau-pucat); }
+  .role-tab .rtIcon { font-size:20px; }
+  .role-tab .rtLabel { font-size:12px; font-weight:600; color:var(--gelap); margin-top:4px; }
+  .role-tab .rtSub { font-size:10px; color:var(--abu); }
+
+  .form-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:var(--gelap); margin-bottom:4px; }
+  .form-sub { font-size:13px; color:var(--abu); margin-bottom:24px; }
+
+  .form-group { margin-bottom:16px; }
+  .form-label { display:block; font-size:12px; font-weight:600; color:var(--gelap); margin-bottom:6px; letter-spacing:0.3px; }
+  .form-input { width:100%; padding:12px 14px; border:1.5px solid rgba(27,107,58,0.15); border-radius:10px; background:white; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--gelap); outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+  .form-input:focus { border-color:var(--hijau); box-shadow:0 0 0 3px rgba(27,107,58,0.08); }
+  .form-input::placeholder { color:#b0bdb6; }
+  .input-with-icon { position:relative; }
+  .input-with-icon .form-input { padding-left:40px; }
+  .input-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--abu); }
+  .eye-btn { position:absolute; right:13px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:16px; color:var(--abu); }
+
+  .member-check { display:flex; align-items:flex-start; gap:10px; background:var(--hijau-pucat); border-radius:10px; padding:12px 14px; margin-bottom:16px; border:1px solid rgba(27,107,58,0.15); }
+  .member-check input[type="checkbox"] { margin-top:2px; accent-color:var(--hijau); }
+  .member-check-text { font-size:12px; color:var(--hijau); font-weight:500; }
+
+  .btn-submit { width:100%; padding:14px; background:var(--hijau); color:white; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; margin-bottom:16px; }
+  .btn-submit:hover { background:var(--gelap); }
+  .btn-submit.emas { background:var(--emas); }
+  .btn-submit.emas:hover { background:#a87520; }
+
+  .divider { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .divider-line { flex:1; height:1px; background:rgba(27,107,58,0.12); }
+  .divider-text { font-size:12px; color:var(--abu); }
+
+  .social-btns { display:flex; gap:10px; }
+  .social-btn { flex:1; padding:11px; border:1.5px solid rgba(27,107,58,0.15); background:white; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; cursor:pointer; color:var(--gelap); transition:border-color 0.2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .social-btn:hover { border-color:var(--hijau); }
+
+  .switch-text { text-align:center; font-size:13px; color:var(--abu); margin-top:20px; }
+  .switch-link { color:var(--hijau); font-weight:600; cursor:pointer; text-decoration:underline; }
+
+  .admin-badge { display:none; align-items:center; gap:6px; background:rgba(200,146,42,0.12); color:var(--emas); padding:4px 12px; border-radius:100px; font-size:11px; font-weight:700; margin-bottom:16px; border:1px solid rgba(200,146,42,0.25); }
+
+  .form-panel { display:none; }
+  .form-panel.active { display:block; }
+  .forgot-link { float:right; font-size:12px; color:var(--hijau); text-decoration:none; font-weight:500; }
+
+  .success-msg { background:var(--hijau-pucat); border-radius:10px; padding:12px 16px; font-size:13px; color:var(--hijau); font-weight:500; margin-bottom:16px; display:none; align-items:center; gap:8px; }
+  .success-msg.show { display:flex; }
+
+  .info-box { background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.2); border-radius:10px; padding:12px 14px; font-size:12px; color:#7a5a18; margin-bottom:16px; display:none; }
+  .info-box.show { display:block; }
+</style>
+</head>
+<body>
+
+<div class="panel-left">
+  <a href="index.html" class="logo">Kantin<span class="dot">Ku</span></a>
+  <div class="left-content">
+    <div class="left-title">Masuk ke<br>Duniamu di<br><em>KantinKu</em></div>
+    <p class="left-desc">Platform belanja & transaksi resmi Pesantren Al-Hikmah. Login sebagai santri, ustadz, atau admin toko.</p>
+    <div class="feature-list">
+      <div class="feature-item"><div class="feature-icon">⭐</div><div class="feature-text">Diskon 20% otomatis untuk ustadz member</div></div>
+      <div class="feature-item"><div class="feature-icon">🛵</div><div class="feature-text">Pesan antar langsung ke kamarmu</div></div>
+      <div class="feature-item"><div class="feature-icon">📋</div><div class="feature-text">Booking antrian online (+Rp 2.000)</div></div>
+      <div class="feature-item"><div class="feature-icon">📦</div><div class="feature-text">Tracking pesanan real-time</div></div>
+    </div>
+  </div>
+  <div class="role-hint">
+    <div class="role-pill active" onclick="setRolePill('user',this)">👤 User / Santri</div>
+    <div class="role-pill" onclick="setRolePill('admin',this)">🔐 Admin Toko</div>
+  </div>
+</div>
+
+<div class="panel-right">
+  <div class="auth-box">
+    <div class="tab-group">
+      <button class="tab-btn active" onclick="switchTab('login',this)">Masuk</button>
+      <button class="tab-btn" onclick="switchTab('register',this)">Daftar</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="panel-login" class="form-panel active">
+      <div class="role-tabs">
+        <div class="role-tab active" id="rt-user" onclick="switchRole('user')">
+          <div class="rtIcon">👤</div><div class="rtLabel">User</div><div class="rtSub">Santri / Tamu</div>
+        </div>
+        <div class="role-tab" id="rt-ustadz" onclick="switchRole('ustadz')">
+          <div class="rtIcon">👳</div><div class="rtLabel">Ustadz</div><div class="rtSub">Member diskon</div>
+        </div>
+        <div class="role-tab" id="rt-admin" onclick="switchRole('admin')">
+          <div class="rtIcon">🔐</div><div class="rtLabel">Admin</div><div class="rtSub">Pengelola toko</div>
+        </div>
+      </div>
+      <div class="admin-badge" id="admin-badge">🔐 Mode Admin — Akses Terbatas</div>
+      <div class="info-box" id="admin-info">Demo admin: <strong>admin@kantinku.id</strong> / <strong>admin123</strong></div>
+      <div class="form-title">Selamat Datang!</div>
+      <p class="form-sub">Masuk ke akun KantinKu-mu.</p>
+      <div class="success-msg" id="login-success">✅ Login berhasil! Mengarahkan ke dashboard...</div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-with-icon">
+            <span class="input-icon">✉️</span>
+            <input type="email" class="form-input" id="login-email" placeholder="email@pesantren.id" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password <a href="#" class="forgot-link">Lupa password?</a></label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" class="form-input" id="login-pass" placeholder="••••••••" required>
+            <button type="button" class="eye-btn" onclick="togglePw('login-pass',this)">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit" id="submit-login">Masuk →</button>
+      </form>
+      <div class="divider"><div class="divider-line"></div><span class="divider-text">atau</span><div class="divider-line"></div></div>
+      <div class="social-btns">
+        <button class="social-btn">🇬 Google</button>
+        <button class="social-btn">📧 SSO Pesantren</button>
+      </div>
+      <p class="switch-text">Belum punya akun? <span class="switch-link" onclick="switchTab('register',document.querySelectorAll('.tab-btn')[1])">Daftar sekarang</span></p>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="panel-register" class="form-panel">
+      <div class="form-title">Buat Akun Baru</div>
+      <p class="form-sub">Bergabung dengan komunitas KantinKu pesantren.</p>
+      <div class="success-msg" id="reg-success">✅ Akun berhasil dibuat! Silakan login.</div>
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap</label>
+          <div class="input-with-icon"><span class="input-icon">👤</span><input type="text" class="form-input" placeholder="Ahmad Santri" required></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nomor Kamar / NIS</label>
+          <div class="input-with-icon"><span class="input-icon">🏠</span><input type="text" class="form-input" placeholder="Kamar A-12 / NIS-2024001" required></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-with-icon"><span class="input-icon">✉️</span><input type="email" class="form-input" placeholder="email@pesantren.id" required></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" class="form-input" id="reg-pass" placeholder="Min. 8 karakter" required>
+            <button type="button" class="eye-btn" onclick="togglePw('reg-pass',this)">👁</button>
+          </div>
+        </div>
+        <div class="member-check">
+          <input type="checkbox" id="is-ustadz">
+          <div class="member-check-text">Saya adalah <strong>Ustadz/Guru</strong> — Aktifkan membership diskon 20% (diverifikasi admin)</div>
+        </div>
+        <div style="background:#fff8e1;border:1px solid rgba(200,146,42,0.3);border-radius:10px;padding:11px 14px;font-size:12px;color:#7a5a18;margin-bottom:16px;">
+          ℹ️ Booking antrian online dikenakan biaya layanan <strong>Rp 2.000</strong> per sesi (jam padat).
+        </div>
+        <button type="submit" class="btn-submit">Daftar Sekarang →</button>
+      </form>
+      <p class="switch-text">Sudah punya akun? <span class="switch-link" onclick="switchTab('login',document.querySelectorAll('.tab-btn')[0])">Masuk di sini</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentRole = 'user';
+  const creds = {
+    user:   { email:'santri@kantinku.id',  pass:'santri123'  },
+    ustadz: { email:'ustadz@kantinku.id',  pass:'ustadz123'  },
+    admin:  { email:'admin@kantinku.id',   pass:'admin123'   },
+  };
+
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+tab).classList.add('active');
+  }
+
+  function switchRole(role) {
+    currentRole = role;
+    ['user','ustadz','admin'].forEach(r=>document.getElementById('rt-'+r)?.classList.remove('active'));
+    document.getElementById('rt-'+role)?.classList.add('active');
+    const badge = document.getElementById('admin-badge');
+    const info  = document.getElementById('admin-info');
+    const sbtn  = document.getElementById('submit-login');
+    if (role === 'admin') {
+      badge.style.display = 'inline-flex';
+      info.classList.add('show');
+      sbtn.classList.add('emas');
+      document.getElementById('login-email').value = 'admin@kantinku.id';
+      document.getElementById('login-pass').value  = 'admin123';
+    } else if (role === 'ustadz') {
+      badge.style.display = 'none';
+      info.classList.remove('show');
+      sbtn.classList.remove('emas');
+      document.getElementById('login-email').value = 'ustadz@kantinku.id';
+      document.getElementById('login-pass').value  = 'ustadz123';
+    } else {
+      badge.style.display = 'none';
+      info.classList.remove('show');
+      sbtn.classList.remove('emas');
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-pass').value  = '';
+    }
+  }
+
+  function setRolePill(role, el) {
+    document.querySelectorAll('.role-pill').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    switchRole(role === 'admin' ? 'admin' : 'user');
+  }
+
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const pass  = document.getElementById('login-pass').value;
+    const cred  = creds[currentRole];
+    if (email === cred.email && pass === cred.pass) {
+      document.getElementById('login-success').classList.add('show');
+      setTimeout(() => {
+        const msgs = {
+          admin:  '✅ Login Admin berhasil!\nDashboard Admin → Kelola Produk, Membership, Transaksi, Delivery',
+          ustadz: '✅ Login Ustadz berhasil!\nMembership aktif. Diskon 20% sudah diterapkan ke akun Anda.',
+          user:   '✅ Login berhasil!\nSelamat datang di KantinKu!'
+        };
+        alert(msgs[currentRole]);
+        document.getElementById('login-success').classList.remove('show');
+      }, 1200);
+    } else {
+      const btn = document.getElementById('submit-login');
+      btn.style.background = '#c0392b';
+      btn.textContent = '❌ Email / Password salah';
+      setTimeout(() => {
+        btn.style.background = currentRole === 'admin' ? 'var(--emas)' : 'var(--hijau)';
+        btn.textContent = 'Masuk →';
+      }, 2000);
+    }
+  }
+
+  function handleRegister(e) {
+    e.preventDefault();
+    const msg = document.getElementById('reg-success');
+    msg.classList.add('show');
+    setTimeout(() => {
+      msg.classList.remove('show');
+      switchTab('login', document.querySelectorAll('.tab-btn')[0]);
+    }, 2000);
+  }
+
+  if (window.location.hash === '#register') {
+    switchTab('register', document.querySelectorAll('.tab-btn')[1]);
+  }
+</script>
+</body>
+</html>
